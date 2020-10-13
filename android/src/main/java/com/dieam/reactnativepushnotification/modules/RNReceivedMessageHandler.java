@@ -113,7 +113,11 @@ public class RNReceivedMessageHandler {
         for(Map.Entry<String, String> entry : notificationData.entrySet()) {
             dataBundle.putString(entry.getKey(), entry.getValue());
         }
-
+        // Parse Twilio message to trigger push notification
+        if (dataBundle.containsKey("twi_body")) {
+            bundle.putString("message", dataBundle.getString("twi_body"));
+        }
+        
         bundle.putParcelable("data", dataBundle);
 
         Log.v(LOG_TAG, "onMessageReceived: " + bundle);
